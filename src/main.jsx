@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./assets/styles/index.css";
+import "./styles/index.css";
 import App from "./App.jsx";
 import Signin from "./Signin.jsx";
 import Interpret from "./Interpret.jsx";

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getAuth, signOut } from "firebase/auth"; // Import Firebase Auth and signOut
 import { auth } from "./firebase-config.js";
-import "./assets/styles/Nav.css";
+import "./styles/Nav.css";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,10 +66,7 @@ function Nav() {
           )}
           {isOpen && (
             <div className="dropdown-menu">
-              <a href="#">My Xrays</a>
-              <a href="#">My Patients</a>
-              <a href="#">My Credits</a>
-              <a href="#">Feedback</a>
+              <a href="#">My MRIs</a>
               <a href="#" onClick={handleSignOut}>
                 Sign Out
               </a>
