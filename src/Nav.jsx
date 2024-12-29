@@ -54,8 +54,8 @@ function Nav() {
         </div>
 
         <div className="nav-menu">
-          <a className="cta-btn" href="/interpret">
-            Interpret
+          <a className="btn" href={location.pathname === "/" ? "/interpret" : "/"}>
+            {location.pathname === "/" ? "Interpret" : "Home"}
           </a>
           {user ? (
             <div className="profile-icon" onClick={toggleDropdown}>

@@ -18,7 +18,7 @@ function App() {
         <section className="msg-cta">
           <h1>Enhance Diagnostic Accuracy with AI-Powered Brain Tumor Detection</h1>
           <p>Save time and improve efficiency with cutting-edge AI tools tailored for healthcare professionals. Make faster, more accurate diagnoses to support better outcomes in brain tumor detection and treatment planning.</p>
-          <a href="/interpret" className="cta-btn">
+          <a href="/interpret" className="btn">
             Start scanning!
           </a>
         </section>
@@ -97,7 +97,7 @@ function App() {
             </div>
           </div>
 
-          <a href="/interpret" className="cta-btn">
+          <a href="/interpret" className="btn">
             Upload your first image now!
           </a>
         </section>

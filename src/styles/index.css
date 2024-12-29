@@ -21,7 +21,7 @@ a {
   text-decoration: none;
 }
 
-.cta-btn {
+.btn {
   padding: 10px 15px;
   background-color: #1174ff;
   color: white;
@@ -29,6 +29,8 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: fit-content;
+  margin: auto;
 }
 
 .signin {
@@ -50,7 +52,7 @@ a {
 }
 
 @media (max-width: 576px) {
-  nav .cta-btn {
+  nav .btn {
     padding: 5px;
     font-size: 14px;
   }

@@ -81,7 +81,7 @@ nav {
 }
 
 @media (max-width: 576px) {
-  nav .cta-btn {
+  nav .btn {
     display: none;
   }
 

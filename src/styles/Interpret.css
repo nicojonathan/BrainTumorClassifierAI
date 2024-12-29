@@ -1,0 +1,72 @@
+section.interpret-cta {
+  height: auto;
+}
+
+section.upload-img * {
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+
+.upload-img-btn,
+.submit-btn {
+  cursor: pointer;
+}
+
+.upload-img-btn {
+  position: relative;
+}
+
+.upload-img-btn::after {
+  content: "Choose a file, supported file: grayscale image with .png format";
+  position: absolute;
+  top: 50px;
+  left: -70px;
+  right: -70px;
+  width: fit-content;
+  color: black;
+}
+
+div.img-preview {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.img-preview .close-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: white;
+  line-height: 15px;
+  color: black;
+  font-weight: 600;
+  position: absolute;
+  right: 240px;
+  top: -10px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+@media (max-width: 960px) {
+  .img-preview .close-btn {
+    right: 165px;
+  }
+}
+
+@media (max-width: 768px) {
+  .img-preview .close-btn {
+    right: 100px;
+  }
+}
+
+@media (max-width: 576px) {
+  .img-preview .close-btn {
+    right: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .img-preview .close-btn {
+    right: -8px;
+  }
+}
