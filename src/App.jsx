@@ -8,6 +8,8 @@ import feature3 from "./assets/img/patients.png";
 import step1 from "./assets/img/cloud-computing.png";
 import step2 from "./assets/img/medical-checkup.png";
 
+import igsocmedicon from "./assets/img/instagram.png";
+
 function App() {
   return (
     <>
@@ -94,8 +96,28 @@ function App() {
               <p>Receive a report with predictions about the tumor type and actionable tips for healthcare professionals. Make informed decisions and optimize treatment planning with advanced AI insights.</p>
             </div>
           </div>
+
+          <a href="/interpret" className="cta-btn">
+            Upload your first image now!
+          </a>
         </section>
       </div>
+      <footer>
+        <div className="copyright">
+          <div className="logo">
+            <h2>
+              BrainTumorClassifier<span>AI</span>
+            </h2>
+            <span>Copyright {"\u00A9"} 2024 - BrainTumorClassifierAI</span>
+          </div>
+        </div>
+        <div className="social-media">
+          <h3>Follow us on social media:</h3>
+          <a href="https://www.instagram.com/braintumorclassifier.ai">
+            <img src={igsocmedicon} alt="" />
+          </a>
+        </div>
+      </footer>
     </>
   );
 }

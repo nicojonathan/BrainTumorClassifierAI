@@ -67,6 +67,14 @@ section.msg-cta {
   display: flex;
   justify-content: space-between;
 }
+.how-it-works .steps {
+  margin-bottom: 30px;
+}
+
+.how-it-works .cta-btn {
+  width: fit-content;
+  margin: auto;
+}
 
 .feature-highlight .feature {
   /* border: 1px solid red; */
@@ -92,6 +100,37 @@ section.msg-cta {
   margin-bottom: 10px;
 }
 
+footer {
+  background-color: white;
+  padding: 30px 50px;
+  text-align: center;
+}
+
+footer .copyright {
+  margin-bottom: 50px;
+}
+
+footer .copyright .logo h2 {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+footer .social-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+footer .social-media h3 {
+  display: inline-block;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+footer .social-media a img {
+  width: 30px;
+}
+
 @media (max-width: 960px) {
   .container-hero {
     width: 650px;
@@ -99,6 +138,11 @@ section.msg-cta {
 
   .msg-cta h1 {
     font-size: 38px;
+  }
+
+  .feature-highlight {
+    width: 700px;
+    margin: auto;
   }
 }
 
@@ -113,6 +157,48 @@ section.msg-cta {
 
   .benefits {
     padding: 0;
+  }
+
+  .feature-highlight {
+    width: 600px;
+    margin: auto;
+  }
+
+  .feature-highlight .feature {
+    /* border: 1px solid red; */
+    width: 170px;
+    text-align: center;
+  }
+
+  .feature-highlight img,
+  .how-it-works img {
+    width: 60px;
+  }
+}
+
+@media (max-width: 650px) {
+  .feature-highlight,
+  .how-it-works {
+    width: 450px;
+  }
+
+  .feature-highlight .features,
+  .how-it-works .steps {
+    margin-top: 30px;
+    display: block;
+  }
+
+  .feature-highlight img,
+  .how-it-works img {
+    width: 60px;
+  }
+
+  .feature-highlight .feature,
+  .how-it-works .step {
+    width: calc(100% - 200px);
+    text-align: center;
+    margin: auto;
+    margin-bottom: 40px;
   }
 }
 
@@ -137,5 +223,20 @@ section.msg-cta {
 
   .msg-cta p {
     font-size: 14px;
+  }
+
+  .feature-highlight,
+  .how-it-works {
+    width: 350px;
+  }
+
+  .feature-highlight img,
+  .how-it-works img {
+    width: 50px;
+  }
+
+  .feature-highlight .feature,
+  .how-it-works .step {
+    width: calc(100% - 100px);
   }
 }

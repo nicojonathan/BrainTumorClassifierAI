@@ -13,7 +13,7 @@ nav {
 }
 
 .logo h2 span {
-  color: rgb(17, 116, 255);
+  color: #1174ff;
 }
 
 .nav-menu {
@@ -87,5 +87,11 @@ nav {
 
   .nav-menu {
     width: fit-content;
+  }
+}
+
+@media (max-width: 400px) {
+  .logo h2 {
+    font-size: 18px;
   }
 }
