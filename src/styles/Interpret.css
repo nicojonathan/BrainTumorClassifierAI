@@ -47,6 +47,30 @@ div.img-preview {
   cursor: pointer;
 }
 
+section.result-container {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+section.result-container > div h3 {
+  text-align: center;
+}
+
+section.result-container > div {
+  background-color: white;
+  padding: 20px;
+}
+
+section.result-container .findings {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 equal-width columns */
+  grid-template-rows: repeat(4, auto); /* 4 rows of automatic height based on content */
+  gap: 30px;
+  width: 100%;
+  /* border: 1px solid #ccc; */
+}
+
 @media (max-width: 960px) {
   .img-preview .close-btn {
     right: 165px;
@@ -62,6 +86,20 @@ div.img-preview {
 @media (max-width: 576px) {
   .img-preview .close-btn {
     right: 40px;
+  }
+
+  section.result-container .findings {
+    grid-template-columns: 1fr;
+    gap: 0px;
+    margin-top: 30px;
+  }
+
+  section.result-container .findings > div:nth-child(even) {
+    margin-bottom: 30px; /* Add gap after the 2nd row */
+  }
+
+  section.result-container .findings ul {
+    padding-left: 20px;
   }
 }
 

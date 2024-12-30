@@ -5,6 +5,7 @@ import * as tf from "@tensorflow/tfjs";
 
 function Interpret() {
   const [image, setImage] = useState(null);
+  const [predictionResult, setPredictionResult] = useState(null);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0]; // Get the uploaded file
@@ -19,6 +20,7 @@ function Interpret() {
 
   const handleSelectAnotherImage = () => {
     setImage(null);
+    setPredictionResult(null);
   };
 
   const preprocessImage = (base64String, targetSize) => {
@@ -72,12 +74,14 @@ function Interpret() {
               .array()
               .then((predictionsArray) => {
                 console.log(predictionsArray);
-                // Find the index of the maximum value
+
                 const maxPrediction = Math.max(...predictionsArray[0]);
                 const predictedClassIndex = predictionsArray[0].indexOf(maxPrediction);
 
-                console.log("Predicted class index:", predictedClassIndex);
+                console.log(predictionResult);
                 console.log("Predicted class probability:", maxPrediction);
+
+                setPredictionResult(predictedClassIndex.toString());
               })
               .catch((error) => {
                 console.error("Error converting predictions to array:", error);
@@ -123,6 +127,90 @@ function Interpret() {
             <a className="btn submit-btn" onClick={handleSubmit}>
               Start scanning!
             </a>
+          )}
+        </section>
+        <section className="result-container">
+          {predictionResult && (
+            <div>
+              <h3>Radiology Report</h3>
+              <div className="findings">
+                <div>
+                  <strong>Tumor type:</strong>
+                </div>
+                <div>{predictionResult === "0" ? "Glioma" : predictionResult === "1" ? "Pituitary" : predictionResult === "2" ? "Meningioma" : ""}</div>
+                <div>
+                  <strong>Key features (general):</strong>
+                </div>
+                <div>
+                  {predictionResult === "0" ? (
+                    <ul>
+                      <li>Enhancement Patterns: High-grade gliomas often exhibit ring or heterogeneous enhancement; low-grade gliomas may show no or faint enhancement.</li>
+                      <li>Edema: High-grade gliomas are associated with significant peritumoral edema.</li>
+                      <li>Necrosis: Central necrosis is common in glioblastomas (Grade IV).</li>
+                      <li>Margins: High-grade gliomas often have poorly defined, infiltrative margins.</li>
+                    </ul>
+                  ) : predictionResult === "1" ? (
+                    <ul>
+                      <li>Size: Tumors &lt; 10 mm are microadenomas, while those &gt; 10 mm are macroadenomas.</li>
+                      <li>Mass Effect: Potential optic chiasm compression (causing bitemporal hemianopia) or lateral invasion into the cavernous sinus.</li>
+                      <li>Enhancement: Tumor tissue enhances less than normal pituitary gland; cystic or necrotic components may be present in larger tumors.</li>
+                    </ul>
+                  ) : predictionResult === "2" ? (
+                    <ul>
+                      <li>Enhancement: Homogeneous and intense enhancement; a dural tail is a hallmark.</li>
+                      <li>Margins: Typically well-defined but may become irregular in atypical or malignant cases.</li>
+                      <li>Bone Changes: Calcification or hyperostosis may be present.</li>
+                      <li>Edema: Associated brain edema can vary with tumor aggressiveness.</li>
+                    </ul>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div>
+                  <strong>Recommendations:</strong>
+                </div>
+                <div>
+                  {predictionResult === "0" ? (
+                    <ul>
+                      <li>Suggest advanced imaging (e.g., spectroscopy, perfusion) for assessing tumor grade and treatment planning.</li>
+                      <li>Highlight the need to evaluate for mass effect or midline shift.</li>
+                    </ul>
+                  ) : predictionResult === "1" ? (
+                    <ul>
+                      <li>Suggest correlating with clinical symptoms to rule out functional adenomas.</li>
+                      <li>Advise checking for cavernous sinus involvement or optic chiasm compression for surgical planning.</li>
+                    </ul>
+                  ) : predictionResult === "2" ? (
+                    <ul>
+                      <li>Suggest noting proximity to venous sinuses and critical neurovascular structures.</li>
+                      <li>Highlight atypical features (e.g., irregular borders, heterogeneous enhancement).</li>
+                    </ul>
+                  ) : (
+                    "ERROR"
+                  )}
+                </div>
+                <div>
+                  <strong>Differential diagnoses:</strong>
+                </div>
+                <div>
+                  {predictionResult === "0" ? (
+                    <ul>
+                      <li>Brain metastases, abscess, or demyelinating lesions.</li>
+                    </ul>
+                  ) : predictionResult === "1" ? (
+                    <ul>
+                      <li>Rathke&apos;s cleft cyst, craniopharyngioma.</li>
+                    </ul>
+                  ) : predictionResult === "2" ? (
+                    <ul>
+                      <li>Dural metastases, hemangiopericytoma.</li>
+                    </ul>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            </div>
           )}
         </section>
       </div>
