@@ -54,8 +54,8 @@ function Nav() {
         </div>
 
         <div className="nav-menu">
-          <a className="btn" href={location.pathname === "/" ? "/interpret" : "/"}>
-            {location.pathname === "/" ? "Interpret" : "Home"}
+          <a className="btn" href={location.pathname === "/" || location.pathname === "/my/mri" ? "/interpret" : "/"}>
+            {location.pathname === "/" || location.pathname === "/my/mri" ? "Interpret" : "Home"}
           </a>
           {user ? (
             <div className="profile-icon" onClick={toggleDropdown}>
@@ -66,7 +66,7 @@ function Nav() {
           )}
           {isOpen && (
             <div className="dropdown-menu">
-              <a href="#">My MRIs</a>
+              <a href={location.pathname === "/my/mri" ? "/" : "/my/mri"}>{location.pathname === "/my/mri" ? "Home" : "My MRI"}</a>
               <a href="#" onClick={handleSignOut}>
                 Sign Out
               </a>
