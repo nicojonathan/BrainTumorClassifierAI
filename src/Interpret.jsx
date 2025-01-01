@@ -163,7 +163,6 @@ function Interpret() {
       const tumorTypeContent = document.querySelector("#tumor-type-content").textContent.trim();
 
       const docRef = await addDoc(collection(db, "radiology_reports"), {
-        report_id: `report_${Date.now()}`,
         image_url: imageURL,
         tumor_type: tumorTypeContent,
         key_features: keyFeaturesContent,
@@ -200,7 +199,7 @@ function Interpret() {
         <section className="upload-img">
           {image && (
             <div className="img-preview">
-              <img src={image} alt="Uploaded" style={{ maxWidth: "300px", maxHeight: "300px" }} />
+              <img src={image} alt="Uploaded" />
               <a className="close-btn" onClick={handleSelectAnotherImage}>
                 x
               </a>
@@ -278,7 +277,7 @@ function Interpret() {
                       <li>Highlight atypical features (e.g., irregular borders, heterogeneous enhancement).</li>
                     </ul>
                   ) : (
-                    "ERROR"
+                    ""
                   )}
                 </div>
                 <div>

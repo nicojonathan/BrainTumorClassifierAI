@@ -6,6 +6,7 @@ import Signin from "./SignIn.jsx";
 import Interpret from "./Interpret.jsx";
 import LoginCheckMechanism from "./LoginCheckMechanism.jsx";
 import MyMriPage from "./MyMriPage.jsx";
+import MriDetailPage from "./MriDetailPage.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/my/mri",
     element: <MyMriPage />,
+  },
+  {
+    path: "/my/mri/:id",
+    element: <MriDetailPage />,
   },
 ]);
 

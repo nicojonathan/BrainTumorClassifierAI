@@ -1,53 +1,53 @@
 import { useEffect, useState } from "react";
-import MriRecord from "./MriRecord";
+import MriReport from "./MriReport.jsx";
 import { db } from "./firebase-config.js";
 import { collection, getDocs } from "firebase/firestore";
 import Nav from "./Nav.jsx";
 import "./styles/MyMriPage.css";
 
 function MyMriPage() {
-  const [MriRecords, setMriRecords] = useState([]);
+  const [MriReports, setMriReports] = useState([]);
 
-  const getAllRadiologyReports = async () => {
+  const getAllMriReports = async () => {
     try {
       const reportsRef = collection(db, "radiology_reports");
-      const querySnapshot = await getDocs(reportsRef);
+      const reports = await getDocs(reportsRef);
 
-      const fetchedRecords = [];
-      querySnapshot.forEach((doc) => {
-        fetchedRecords.push(new MriRecord(doc.id, doc.data().timestamp, doc.data().tumor_type, doc.data().image_url));
+      const fetchedReports = [];
+      reports.forEach((report) => {
+        fetchedReports.push(new MriReport(report.id, report.data().timestamp, report.data().tumor_type, report.data().image_url));
       });
 
-      setMriRecords(fetchedRecords);
+      setMriReports(fetchedReports);
     } catch (error) {
       console.error("Error retrieving documents:", error);
     }
   };
 
   useEffect(() => {
-    getAllRadiologyReports();
+    getAllMriReports();
   });
 
   return (
     <>
       <Nav />
-      <div className="container-record">
-        {MriRecords.map((record, index) => (
-          <div key={index} className="record">
+      <div className="container-report">
+        {MriReports.map((report, index) => (
+          <div key={index} className="report">
             <div>
-              <img src={record.imageUrl} alt="" />
+              <img src={report.imageUrl} alt="" />
             </div>
             <div className="metadata">
               <p className="report-title">
                 <strong>
-                  {record.tumorType}
+                  {report.tumorType}
                   {"_"}
-                  {record.timestamp}
+                  {report.timestamp}
                 </strong>
               </p>
             </div>
             <div>
-              <a href={`/my/mri/${record.id}`} className="btn btn-view-report">
+              <a href={`/my/mri/${report.id}`} className="btn btn-view-report">
                 View
               </a>
             </div>

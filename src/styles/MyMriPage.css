@@ -1,10 +1,10 @@
-.container-record {
+.container-report {
   width: 800px;
   margin: auto;
   margin-top: 30px;
 }
 
-.container-record .record {
+.container-report .report {
   margin-bottom: 10px;
   background-color: rgba(255, 255, 255, 0.962);
   height: auto;
@@ -15,13 +15,13 @@
   border-radius: 10px;
 }
 
-.container-record .record img {
+.container-report .report img {
   display: block;
   width: 100%;
   border-radius: 10px;
 }
 
-.container-record .record div:last-child {
+.container-report .report div:last-child {
   display: flex;
   align-items: center;
 }
@@ -32,33 +32,33 @@
 }
 
 @media (max-width: 960px) {
-  .container-record {
+  .container-report {
     width: 650px;
   }
 }
 
 @media (max-width: 768px) {
-  .container-record {
+  .container-report {
     width: 520px;
   }
 }
 
 @media (max-width: 576px) {
-  .container-record {
+  .container-report {
     width: 400px;
   }
 }
 
 @media (max-width: 480px) {
-  .container-record {
+  .container-report {
     width: 300px;
   }
 
-  .container-record .record {
+  .container-report .report {
     grid-template-columns: 50px 3fr 1fr;
   }
 
-  .container-record {
+  .container-report {
     font-size: 14px;
   }
 }

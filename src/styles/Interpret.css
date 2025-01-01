@@ -52,6 +52,11 @@ section.result-container {
   margin-bottom: 30px;
 }
 
+.img-preview img {
+  width: 300px;
+  height: 300px;
+}
+
 section.result-container > div h3 {
   text-align: center;
 }
