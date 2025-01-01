@@ -1,11 +1,9 @@
 // import React from "react";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "./firebase-config"; // Import Firebase Auth and Provider
-import { getFirestore, doc, setDoc } from "firebase/firestore"; // Import Firestore functions
+import { doc, setDoc } from "firebase/firestore"; // Import Firestore functions
+import { db } from "./firebase-config.js";
 import { useNavigate, useLocation } from "react-router-dom"; // Import useNavigate for redirection and useLocation to get current location
-
-// Initialize Firestore
-const db = getFirestore();
 
 function SignIn() {
   const navigate = useNavigate(); // Initialize the navigate function

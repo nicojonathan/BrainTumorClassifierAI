@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+// import { db } from "./firebase";
+import { db } from "./firebase-config.js";
+import { collection, addDoc } from "firebase/firestore";
+
 import Nav from "./Nav.jsx";
 import "./styles/Interpret.css";
 import * as tf from "@tensorflow/tfjs";
@@ -6,9 +10,11 @@ import * as tf from "@tensorflow/tfjs";
 function Interpret() {
   const [image, setImage] = useState(null);
   const [predictionResult, setPredictionResult] = useState(null);
+  const [imageURL, setImageURL] = useState(null);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0]; // Get the uploaded file
+    console.log(file);
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -62,41 +68,128 @@ function Interpret() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (image) {
-      const model = await tf.loadLayersModel("/model/model.json");
-      preprocessImage(image, [256, 256])
-        .then((tensor) => {
-          if (tensor && tensor.shape) {
-            console.log("Preprocessed tensor shape:", tensor.shape);
+      try {
+        // Load the model asynchronously
+        const model = await tf.loadLayersModel("/model/model.json");
 
-            const predictions = model.predict(tensor);
+        // Check if model loaded correctly
+        if (model) {
+          console.log("Model loaded successfully");
 
-            predictions
-              .array()
-              .then((predictionsArray) => {
-                console.log(predictionsArray);
+          // Preprocess image and make predictions
+          preprocessImage(image, [256, 256])
+            .then((tensor) => {
+              if (tensor && tensor.shape) {
+                console.log("Preprocessed tensor shape:", tensor.shape);
 
-                const maxPrediction = Math.max(...predictionsArray[0]);
-                const predictedClassIndex = predictionsArray[0].indexOf(maxPrediction);
+                const predictions = model.predict(tensor);
 
-                console.log(predictionResult);
-                console.log("Predicted class probability:", maxPrediction);
+                predictions
+                  .array()
+                  .then(async (predictionsArray) => {
+                    console.log(predictionsArray);
 
-                setPredictionResult(predictedClassIndex.toString());
-              })
-              .catch((error) => {
-                console.error("Error converting predictions to array:", error);
-              });
-          } else {
-            console.error("No tensor was returned.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error preprocessing image:", error);
-        });
+                    const maxPrediction = Math.max(...predictionsArray[0]);
+                    const predictedClassIndex = predictionsArray[0].indexOf(maxPrediction);
+
+                    console.log("Prediction result:", predictedClassIndex);
+                    console.log("Predicted class probability:", maxPrediction);
+
+                    await uploadImageToCloudinary();
+                    setPredictionResult(predictedClassIndex.toString());
+                  })
+                  .catch((error) => {
+                    console.error("Error converting predictions to array:", error);
+                  });
+              } else {
+                console.error("No tensor was returned.");
+              }
+            })
+            .catch((error) => {
+              console.error("Error preprocessing image:", error);
+            });
+        } else {
+          console.error("Model loading failed");
+        }
+      } catch (error) {
+        console.error("Error loading model:", error);
+      }
     } else {
       console.log("No image uploaded yet!");
     }
   };
+
+  const uploadImageToCloudinary = async () => {
+    try {
+      if (!image) {
+        console.error("No image selected");
+        return;
+      }
+
+      const base64Image = image;
+
+      const formData = new FormData();
+      formData.append("file", base64Image);
+      formData.append("upload_preset", "BrainTumorClassifierAI-upload-preset");
+      formData.append("cloud_name", "dfzjzaedj");
+
+      const response = await fetch("https://api.cloudinary.com/v1_1/dfzjzaedj/image/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.secure_url) {
+        // console.log("Image uploaded successfully:", data.secure_url);
+        setImageURL(data.secure_url);
+      } else {
+        console.error("Error uploading image:", data.error);
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
+  const saveReportToFirestore = async () => {
+    try {
+      // Wait a bit for DOM rendering to complete
+
+      const keyFeaturesContent = Array.from(document.querySelectorAll("#key-features-content li")).map((item) => item.textContent.trim());
+
+      const recommendationsContent = Array.from(document.querySelectorAll("#recommendations-content li")).map((item) => item.textContent.trim());
+
+      const differentialDiagnosesContent = Array.from(document.querySelectorAll("#differential-diagnoses-content li")).map((item) => item.textContent.trim());
+
+      const tumorTypeContent = document.querySelector("#tumor-type-content").textContent.trim();
+
+      const docRef = await addDoc(collection(db, "radiology_reports"), {
+        report_id: `report_${Date.now()}`,
+        image_url: imageURL,
+        tumor_type: tumorTypeContent,
+        key_features: keyFeaturesContent,
+        recommendations: recommendationsContent,
+        differential_diagnoses: differentialDiagnosesContent,
+        timestamp: new Date().toISOString(),
+      });
+
+      console.log("Your report has been saved successfully");
+
+      console.log("Document written with ID: ", docRef.id);
+      // Delay until the next event loop
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+
+  useEffect(() => {
+    // useEffect esnures that the HTML rendered before calling these following functions
+    if (predictionResult) {
+      saveReportToFirestore().then(() => {
+        alert("Your report has been saved succesfully");
+      });
+    }
+  }, [predictionResult]);
 
   return (
     <>
@@ -137,11 +230,11 @@ function Interpret() {
                 <div>
                   <strong>Tumor type:</strong>
                 </div>
-                <div>{predictionResult === "0" ? "Glioma" : predictionResult === "1" ? "Pituitary" : predictionResult === "2" ? "Meningioma" : ""}</div>
+                <div id="tumor-type-content">{predictionResult === "0" ? "Glioma" : predictionResult === "1" ? "Pituitary" : predictionResult === "2" ? "Meningioma" : ""}</div>
                 <div>
                   <strong>Key features (general):</strong>
                 </div>
-                <div>
+                <div id="key-features-content">
                   {predictionResult === "0" ? (
                     <ul>
                       <li>Enhancement Patterns: High-grade gliomas often exhibit ring or heterogeneous enhancement; low-grade gliomas may show no or faint enhancement.</li>
@@ -169,7 +262,7 @@ function Interpret() {
                 <div>
                   <strong>Recommendations:</strong>
                 </div>
-                <div>
+                <div id="recommendations-content">
                   {predictionResult === "0" ? (
                     <ul>
                       <li>Suggest advanced imaging (e.g., spectroscopy, perfusion) for assessing tumor grade and treatment planning.</li>
@@ -192,7 +285,7 @@ function Interpret() {
                 <div>
                   <strong>Differential diagnoses:</strong>
                 </div>
-                <div>
+                <div id="differential-diagnoses-content">
                   {predictionResult === "0" ? (
                     <ul>
                       <li>Brain metastases, abscess, or demyelinating lesions.</li>
