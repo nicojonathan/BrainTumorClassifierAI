@@ -21,7 +21,7 @@ function Nav() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser); // Set user data when it changes
-      console.log(currentUser.photoURL);
+      // console.log(currentUser.photoURL);
     });
 
     window.addEventListener("click", closeDropdown);
@@ -38,7 +38,7 @@ function Nav() {
     try {
       await signOut(auth);
       setUser(null); // Clear user data from state after sign-out
-      console.log("User signed out successfully");
+      // console.log("User signed out successfully");
     } catch (error) {
       console.error("Error signing out:", error.message);
     }

@@ -33,6 +33,13 @@ a {
   margin: auto;
 }
 
+.signin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 .signin {
   text-align: center;
   padding: 20px;

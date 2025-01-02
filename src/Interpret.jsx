@@ -6,14 +6,16 @@ import Nav from "./Nav.jsx";
 import "./styles/Interpret.css";
 import * as tf from "@tensorflow/tfjs";
 
-function Interpret() {
+// eslint-disable-next-line react/prop-types
+function Interpret({ user }) {
+  // console.log(user);
   const [image, setImage] = useState(null);
   const [predictionResult, setPredictionResult] = useState(null);
   const [imageURL, setImageURL] = useState(null);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0]; // Get the uploaded file
-    console.log(file);
+    // console.log(file);
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -73,26 +75,26 @@ function Interpret() {
 
         // Check if model loaded correctly
         if (model) {
-          console.log("Model loaded successfully");
+          // console.log("Model loaded successfully");
 
           // Preprocess image and make predictions
           preprocessImage(image, [256, 256])
             .then((tensor) => {
               if (tensor && tensor.shape) {
-                console.log("Preprocessed tensor shape:", tensor.shape);
+                // console.log("Preprocessed tensor shape:", tensor.shape);
 
                 const predictions = model.predict(tensor);
 
                 predictions
                   .array()
                   .then(async (predictionsArray) => {
-                    console.log(predictionsArray);
+                    // console.log(predictionsArray);
 
                     const maxPrediction = Math.max(...predictionsArray[0]);
                     const predictedClassIndex = predictionsArray[0].indexOf(maxPrediction);
 
-                    console.log("Prediction result:", predictedClassIndex);
-                    console.log("Predicted class probability:", maxPrediction);
+                    // console.log("Prediction result:", predictedClassIndex);
+                    // console.log("Predicted class probability:", maxPrediction);
 
                     await uploadImageToCloudinary();
                     setPredictionResult(predictedClassIndex.toString());
@@ -162,18 +164,20 @@ function Interpret() {
 
       const tumorTypeContent = document.querySelector("#tumor-type-content").textContent.trim();
 
-      const docRef = await addDoc(collection(db, "radiology_reports"), {
+      await addDoc(collection(db, "radiology_reports"), {
         image_url: imageURL,
         tumor_type: tumorTypeContent,
         key_features: keyFeaturesContent,
         recommendations: recommendationsContent,
         differential_diagnoses: differentialDiagnosesContent,
         timestamp: new Date().toISOString(),
+        // eslint-disable-next-line react/prop-types
+        user_id: user.uid,
       });
 
-      console.log("Your report has been saved successfully");
+      // console.log("Your report has been saved successfully");
 
-      console.log("Document written with ID: ", docRef.id);
+      // console.log("Document written with ID: ", docRef.id);
       // Delay until the next event loop
     } catch (e) {
       console.error("Error adding document: ", e);

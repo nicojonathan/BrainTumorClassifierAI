@@ -12,7 +12,7 @@ function MriDetailPage() {
 
   const getMriReportById = async () => {
     try {
-      console.log("ID: ", id);
+      // console.log("ID: ", id);
       const reportRef = doc(db, "radiology_reports", id);
       const report = await getDoc(reportRef);
 

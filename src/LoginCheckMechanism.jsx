@@ -13,13 +13,13 @@ const LoginCheckMechanism = ({ children }) => {
       setUser(currentUser);
       setLoading(false); // Update loading state
 
-      if (currentUser) {
-        // A user is logged in, currentUser will contain user details
-        console.log(currentUser); // {uid, email, displayName, etc.}
-      } else {
-        // No user is logged in, currentUser is null
-        console.log("No user is logged in");
-      }
+      // if (currentUser) {
+      //   // A user is logged in, currentUser will contain user details
+      //   console.log(currentUser); // {uid, email, displayName, etc.}
+      // } else {
+      //   // No user is logged in, currentUser is null
+      //   console.log("No user is logged in");
+      // }
     });
 
     return () => unsubscribe();
@@ -33,8 +33,7 @@ const LoginCheckMechanism = ({ children }) => {
     // Pass the current location as state
     return <Navigate to="/auth/signin" state={{ from: window.location.pathname }} />;
   }
-
-  return children;
+  return children({ user });
 };
 
 export default LoginCheckMechanism;

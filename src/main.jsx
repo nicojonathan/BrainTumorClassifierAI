@@ -20,19 +20,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/interpret",
-    element: (
-      <LoginCheckMechanism>
-        <Interpret />
-      </LoginCheckMechanism>
-    ),
+    element: <LoginCheckMechanism>{({ user }) => <Interpret user={user} />}</LoginCheckMechanism>,
   },
   {
     path: "/my/mri",
-    element: <MyMriPage />,
+    element: <LoginCheckMechanism>{({ user }) => <MyMriPage user={user} />}</LoginCheckMechanism>,
   },
   {
     path: "/my/mri/:id",
-    element: <MriDetailPage />,
+    element: <LoginCheckMechanism>{({ user }) => <MriDetailPage user={user} />}</LoginCheckMechanism>,
   },
 ]);
 
