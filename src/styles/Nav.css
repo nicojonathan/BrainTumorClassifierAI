@@ -90,6 +90,12 @@ nav {
   }
 }
 
+@media (max-width: 420px) {
+  nav {
+    margin-top: 20px;
+  }
+}
+
 @media (max-width: 400px) {
   .logo h2 {
     font-size: 18px;

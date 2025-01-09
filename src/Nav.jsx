@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getAuth, signOut } from "firebase/auth"; // Import Firebase Auth and signOut
 import { auth } from "./firebase-config.js";
 import "./styles/Nav.css";
+import defaultProfilePhoto from "./assets/img/user.png";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,7 +60,7 @@ function Nav() {
           </a>
           {user ? (
             <div className="profile-icon" onClick={toggleDropdown}>
-              <img src={user.photoURL || "./assets/img/user.png"} className="profile-image" />
+              <img src={user.photoURL || defaultProfilePhoto} className="profile-image" />
             </div>
           ) : (
             <a href="/auth/signin">Sign In</a>

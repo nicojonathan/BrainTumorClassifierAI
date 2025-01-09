@@ -7,6 +7,7 @@ import Interpret from "./Interpret.jsx";
 import LoginCheckMechanism from "./LoginCheckMechanism.jsx";
 import MyMriPage from "./MyMriPage.jsx";
 import MriDetailPage from "./MriDetailPage.jsx";
+// import { BrowserRouter } from "react-router-dom";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -30,7 +31,18 @@ const router = createBrowserRouter([
     path: "/my/mri/:id",
     element: <LoginCheckMechanism>{({ user }) => <MriDetailPage user={user} />}</LoginCheckMechanism>,
   },
+  // {
+  //   basename: "/BrainTumorClassifierAI", // Set the basename directly in createBrowserRouter
+  // },
 ]);
+
+// createRoot(document.getElementById("root")).render(
+//   <StrictMode>
+//     <BrowserRouter basename="/BrainTumorClassifierAI">
+//       <RouterProvider router={router} />
+//     </BrowserRouter>
+//   </StrictMode>
+// );
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
